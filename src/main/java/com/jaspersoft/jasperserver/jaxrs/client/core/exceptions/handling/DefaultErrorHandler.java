@@ -33,7 +33,6 @@ import com.jaspersoft.jasperserver.jaxrs.client.core.exceptions.Representational
 import com.jaspersoft.jasperserver.jaxrs.client.core.exceptions.RequestedRepresentationNotAvailableForResourceException;
 import com.jaspersoft.jasperserver.jaxrs.client.core.exceptions.ResourceNotFoundException;
 import com.jaspersoft.jasperserver.dto.common.ErrorDescriptor;
-import org.glassfish.jersey.message.internal.MessageBodyProviderNotFoundException;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
@@ -72,8 +71,6 @@ public class DefaultErrorHandler implements ErrorHandler {
         T entity = null;
         try {
             entity = response.readEntity(expectedType);
-        } catch (MessageBodyProviderNotFoundException e) {
-//            log.warn("Cannot read entity from response body: unexpected body content");
         } catch (ProcessingException e) {
 //            log.warn("Cannot read entity from response body");
         }

@@ -34,7 +34,6 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import org.glassfish.jersey.client.ClientProperties;
 
 public class JasperserverRestClient {
     private final RestClientConfiguration configuration;
@@ -96,7 +95,7 @@ public class JasperserverRestClient {
         form.param("userTimezone", storage.getUserTimeZone().getID());
         form.param("userLocale", storage.getUserLocale().toString());
         WebTarget target = rootTarget.path("/j_spring_security_check")
-                    .property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
+                    .property("jersey.config.client.followRedirects", Boolean.FALSE);
         Response response = target.request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         if (response.getStatus() == Status.FOUND.getStatusCode()) {
             String location = response.getLocation().toString();

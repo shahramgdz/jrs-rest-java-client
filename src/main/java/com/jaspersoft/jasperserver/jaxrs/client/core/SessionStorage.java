@@ -34,11 +34,8 @@ import javax.net.ssl.SSLSession;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.filter.LoggingFilter;
-import org.glassfish.jersey.jackson.JacksonFeature;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 
@@ -123,13 +120,13 @@ public class SessionStorage {
         Integer connectionTimeout = configuration.getConnectionTimeout();
 
         if (connectionTimeout != null) {
-            client.property(ClientProperties.CONNECT_TIMEOUT, connectionTimeout);
+            client.property("jersey.config.client.connectTimeout", connectionTimeout);
         }
 
         Integer readTimeout = configuration.getReadTimeout();
 
         if (readTimeout != null) {
-            client.property(ClientProperties.READ_TIMEOUT, readTimeout);
+            client.property("jersey.config.client.readTimeout", readTimeout);
         }
 
         configClient();
@@ -137,11 +134,10 @@ public class SessionStorage {
 
     protected WebTarget configClient() {
         JacksonJsonProvider customRepresentationTypeProvider = new CustomRepresentationTypeProvider()
-                .configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         rootTarget = client.target(configuration.getJasperReportsServerUrl());
         rootTarget
                 .register(customRepresentationTypeProvider)
-                .register(JacksonFeature.class)
                 .register(MultiPartWriter.class);
         if (sessionId != null) {
             rootTarget.register(new SessionOutputFilter(sessionId));
