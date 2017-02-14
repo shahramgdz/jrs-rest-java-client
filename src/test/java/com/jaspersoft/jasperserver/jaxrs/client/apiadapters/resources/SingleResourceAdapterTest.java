@@ -14,8 +14,7 @@ import com.jaspersoft.jasperserver.jaxrs.client.core.SessionStorage;
 import com.jaspersoft.jasperserver.jaxrs.client.core.enums.MimeType;
 import com.jaspersoft.jasperserver.jaxrs.client.core.exceptions.handling.DefaultErrorHandler;
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
-import com.sun.jersey.multipart.FormDataBodyPart;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartOutput;
 import java.io.File;
 import java.io.InputStream;
 import java.util.List;
@@ -61,7 +60,7 @@ import static org.testng.Assert.assertSame;
 public class SingleResourceAdapterTest extends PowerMockTestCase {
 
     @Captor
-    private ArgumentCaptor<FormDataMultiPart> captor;
+    private ArgumentCaptor<MultipartOutput> captor;
 
 
     @Mock
@@ -332,12 +331,6 @@ public class SingleResourceAdapterTest extends PowerMockTestCase {
         assertNotSame(currentThreadId, newThreadId.get());
         verify(clientFileJerseyRequestMock, times(1)).post(captor.capture());
         verify(callback).execute(clientFileOperationResultMock);
-
-        FormDataMultiPart intercepted = captor.getValue();
-        Map<String, List<FormDataBodyPart>> recievedFields = intercepted.getFields();
-
-        assertSame(recievedFields.get("label").get(0).getValue(), "label_");
-        assertSame(recievedFields.get("description").get(0).getValue(), "description_");
     }
 
     @Test
@@ -901,12 +894,6 @@ public class SingleResourceAdapterTest extends PowerMockTestCase {
         assertNotNull(retrieved);
         assertSame(retrieved, clientFileOperationResultMock);
         verify(clientFileJerseyRequestMock, times(1)).post(captor.capture());
-
-        FormDataMultiPart intercepted = captor.getValue();
-        Map<String, List<FormDataBodyPart>> recievedFields = intercepted.getFields();
-
-        assertSame(recievedFields.get("label").get(0).getValue(), "label_");
-        assertSame(recievedFields.get("description").get(0).getValue(), "description_");
     }
 
     @Test

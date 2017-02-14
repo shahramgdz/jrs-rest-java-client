@@ -19,7 +19,6 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.client.ClientProperties;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -452,7 +451,7 @@ public class JasperserverRestClientTest extends PowerMockTestCase {
         verify(sessionStorageMock).getCredentials();
         verify(rootTargetMock, never()).register(isA(BasicAuthenticationFilter.class));
         verify(rootTargetMock).path("/j_spring_security_check");
-        verify(webTargetMock).property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
+        verify(webTargetMock).property("jersey.config.client.followRedirects", Boolean.FALSE);
         verify(webTargetMock).request();
         verify(invocationBuilderMock).post(Entity.entity(any(Form.class), MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         verify(responseMock).getLocation();
@@ -507,7 +506,7 @@ public class JasperserverRestClientTest extends PowerMockTestCase {
         verify(sessionStorageMock).getCredentials();
         verify(rootTargetMock, never()).register(isA(BasicAuthenticationFilter.class));
         verify(rootTargetMock).path("/j_spring_security_check");
-        verify(webTargetMock).property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
+        verify(webTargetMock).property("jersey.config.client.followRedirects", Boolean.FALSE);
         verify(webTargetMock).request();
         verify(formSpy).param("j_username", USER_NAME);
         verify(formSpy).param("j_password", PASSWORD);
@@ -566,7 +565,7 @@ public class JasperserverRestClientTest extends PowerMockTestCase {
         verify(sessionStorageMock).getCredentials();
         verify(rootTargetMock, never()).register(isA(BasicAuthenticationFilter.class));
         verify(rootTargetMock).path("/j_spring_security_check");
-        verify(webTargetMock).property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
+        verify(webTargetMock).property("jersey.config.client.followRedirects", Boolean.FALSE);
         verify(webTargetMock).request();
         verify(formSpy).param("j_username", USER_NAME);
         verify(formSpy).param("j_password", PASSWORD);
@@ -698,7 +697,7 @@ public class JasperserverRestClientTest extends PowerMockTestCase {
         verify(sessionStorageMock).getCredentials();
         verify(rootTargetMock).register(isA(BasicAuthenticationFilter.class));
         verify(rootTargetMock, never()).path("/j_spring_security_check");
-        verify(webTargetMock, never()).property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
+        verify(webTargetMock, never()).property("jersey.config.client.followRedirects", Boolean.FALSE);
         verify(webTargetMock, never()).request();
         verify(invocationBuilderMock, never()).post(Entity.entity(any(Form.class), MediaType.APPLICATION_FORM_URLENCODED_TYPE));
         verify(rootTargetMock, never()).register(isA(SessionOutputFilter.class));

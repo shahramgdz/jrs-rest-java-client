@@ -24,7 +24,7 @@ import com.jaspersoft.jasperserver.dto.resources.ClientReportUnit;
 import com.jaspersoft.jasperserver.jaxrs.client.apiadapters.resources.support.processor.CommonOperationProcessorImpl;
 import com.jaspersoft.jasperserver.jaxrs.client.core.SessionStorage;
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -34,11 +34,11 @@ public abstract class ReportUnitResourceOperationProcessorDecorator {
 
     protected CommonOperationProcessorImpl<ClientReportUnit> processor;
     protected ClientReportUnit reportUnit;
-    protected FormDataMultiPart multipart;
+    protected MultipartFormDataOutput multipart;
 
     public ReportUnitResourceOperationProcessorDecorator(ClientReportUnit reportUnit, SessionStorage sessionStorage) {
         this.processor = new CommonOperationProcessorImpl(reportUnit, reportUnit.getClass(), sessionStorage);
-        this.multipart = new FormDataMultiPart();
+        this.multipart = new MultipartFormDataOutput();
         this.reportUnit = reportUnit;
     }
 

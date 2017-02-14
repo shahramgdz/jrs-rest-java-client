@@ -23,7 +23,6 @@ package com.jaspersoft.jasperserver.jaxrs.client.core;
 
 import com.jaspersoft.jasperserver.jaxrs.client.filters.SessionOutputFilter;
 import com.jaspersoft.jasperserver.jaxrs.client.providers.CustomRepresentationTypeProvider;
-import com.sun.jersey.multipart.impl.MultiPartWriter;
 import java.security.SecureRandom;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -137,8 +136,7 @@ public class SessionStorage {
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         rootTarget = client.target(configuration.getJasperReportsServerUrl());
         rootTarget
-                .register(customRepresentationTypeProvider)
-                .register(MultiPartWriter.class);
+                .register(customRepresentationTypeProvider);
         if (sessionId != null) {
             rootTarget.register(new SessionOutputFilter(sessionId));
         }

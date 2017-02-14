@@ -6,15 +6,13 @@ import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.NullEntityO
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResultFactoryImpl;
 import com.jaspersoft.jasperserver.jaxrs.client.providers.CustomRepresentationTypeProvider;
-import com.sun.jersey.multipart.impl.MultiPartWriter;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import org.glassfish.jersey.client.JerseyWebTarget;
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
@@ -54,7 +52,7 @@ public class JerseyRequestTest extends PowerMockTestCase {
     @Mock
     private JerseyRequest<Class> expected;
     @Mock
-    private JerseyWebTarget webTarget;
+    private WebTarget webTarget;
     @Mock
     private RestClientConfiguration clientConfiguration;
     @Mock
@@ -81,8 +79,6 @@ public class JerseyRequestTest extends PowerMockTestCase {
         when(sessionStorage.getRootTarget()).thenReturn(webTarget);
         when(webTarget.path(Mockito.anyString())).thenReturn(webTarget);
         when(webTarget.register(CustomRepresentationTypeProvider.class)).thenReturn(webTarget);
-        when(webTarget.register(JacksonFeature.class)).thenReturn(webTarget);
-        when(webTarget.register(MultiPartWriter.class)).thenReturn(webTarget);
     }
 
     /**

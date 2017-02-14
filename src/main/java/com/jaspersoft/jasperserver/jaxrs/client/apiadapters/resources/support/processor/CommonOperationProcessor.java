@@ -21,13 +21,13 @@
 package com.jaspersoft.jasperserver.jaxrs.client.apiadapters.resources.support.processor;
 
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import javax.ws.rs.core.MediaType;
 
 /**
  * @author Alexander Krasnyanskiy
  */
 public interface CommonOperationProcessor<ResourceType> {
-    OperationResult<ResourceType> create(FormDataMultiPart multipart, MediaType mediaType, String path);
+    OperationResult<ResourceType> create(MultipartFormDataOutput multipart, MediaType mediaType, String path);
     OperationResult<ResourceType> get(String uri);
 }

@@ -42,13 +42,13 @@ public class SecureMondrianConnectionResourceBuilder extends SecureMondrianConne
     }
 
     public SecureMondrianConnectionResourceBuilder withMondrianSchema(InputStream schema, ClientFile schemaDescriptor) {
-        multipart.field("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
+        multipart.addFormData("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
         super.connection.setSchema(schemaDescriptor);
         return this;
     }
 
     public SecureMondrianConnectionResourceBuilder withMondrianSchema(String schema, ClientFile schemaDescriptor) {
-        multipart.field("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
+        multipart.addFormData("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
         super.connection.setSchema(schemaDescriptor);
         return this;
     }
@@ -66,7 +66,7 @@ public class SecureMondrianConnectionResourceBuilder extends SecureMondrianConne
     public SecureMondrianConnectionResourceBuilder withAccessGrantSchemasAsStream(List<InputStream> schemas, List<ClientReferenceableFile> schemaDescriptors) {
         super.connection.setAccessGrants(schemaDescriptors);
         for (InputStream schema : schemas) {
-            multipart.field("accessGrantSchemas.accessGrantSchema[" + schemaCounter + "]", schema, new MediaType("application", "accessGrantSchema+xml"));
+            multipart.addFormData("accessGrantSchemas.accessGrantSchema[" + schemaCounter + "]", schema, new MediaType("application", "accessGrantSchema+xml"));
         }
         return this;
     }
@@ -74,7 +74,7 @@ public class SecureMondrianConnectionResourceBuilder extends SecureMondrianConne
     public SecureMondrianConnectionResourceBuilder withAccessGrantSchemasAsString(List<String> schemas, List<ClientReferenceableFile> schemaDescriptors) {
         super.connection.setAccessGrants(schemaDescriptors);
         for (String schema : schemas) {
-            multipart.field("accessGrantSchemas.accessGrantSchema[" + schemaCounter + "]", schema, new MediaType("application", "accessGrantSchema+xml"));
+            multipart.addFormData("accessGrantSchemas.accessGrantSchema[" + schemaCounter + "]", schema, new MediaType("application", "accessGrantSchema+xml"));
         }
         return this;
     }

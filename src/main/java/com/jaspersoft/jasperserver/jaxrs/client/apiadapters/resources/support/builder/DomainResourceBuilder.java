@@ -44,31 +44,31 @@ public class DomainResourceBuilder extends DomainResourceOperationProcessorDecor
     }
 
     public DomainResourceBuilder withSchema(String schema, ClientFile schemaRef) {
-        super.multipart.field("schema", schema, MediaType.APPLICATION_XML_TYPE);
+        super.multipart.addFormData("schema", schema, MediaType.APPLICATION_XML_TYPE);
         super.domain.setSchema(schemaRef);
         return this;
     }
 
     public DomainResourceBuilder withSchema(InputStream schema, ClientFile schemaRef) {
-        super.multipart.field("schema", schema, MediaType.APPLICATION_XML_TYPE);
+        super.multipart.addFormData("schema", schema, MediaType.APPLICATION_XML_TYPE);
         super.domain.setSchema(schemaRef);
         return this;
     }
 
     public DomainResourceBuilder withSecurityFile(InputStream securityFile, ClientFile securityFileRef) {
-        super.multipart.field("securityFile", securityFile, MediaType.APPLICATION_XML_TYPE);
+        super.multipart.addFormData("securityFile", securityFile, MediaType.APPLICATION_XML_TYPE);
         super.domain.setSecurityFile(securityFileRef);
         return this;
     }
 
     public DomainResourceBuilder withSecurityFile(String securityFile, ClientFile securityFileRef) {
-        super.multipart.field("securityFile", securityFile, MediaType.APPLICATION_XML_TYPE);
+        super.multipart.addFormData("securityFile", securityFile, MediaType.APPLICATION_XML_TYPE);
         super.domain.setSecurityFile(securityFileRef);
         return this;
     }
 
     public DomainResourceBuilder withBundle(InputStream bundle, ClientBundle bundleRef) {
-        super.multipart.field("bundles.bundle[" + bundleCounter++ + "]", bundle, MediaType.TEXT_PLAIN_TYPE);
+        super.multipart.addFormData("bundles.bundle[" + bundleCounter++ + "]", bundle, MediaType.TEXT_PLAIN_TYPE);
         List<ClientBundle> bundles = super.domain.getBundles();
 
         if (bundles != null) {
@@ -88,7 +88,7 @@ public class DomainResourceBuilder extends DomainResourceOperationProcessorDecor
     }
 
     public DomainResourceBuilder withBundle(String bundle, ClientBundle bundleRef) {
-        super.multipart.field("bundles.bundle[" + bundleCounter++ + "]", bundle, MediaType.TEXT_PLAIN_TYPE);
+        super.multipart.addFormData("bundles.bundle[" + bundleCounter++ + "]", bundle, MediaType.TEXT_PLAIN_TYPE);
         List<ClientBundle> bundles = super.domain.getBundles();
 
         if (bundles != null) {
@@ -109,7 +109,7 @@ public class DomainResourceBuilder extends DomainResourceOperationProcessorDecor
 
     public DomainResourceBuilder withBundles(List<InputStream> bundles, List<ClientBundle> bundlesRef) {
         for (InputStream bundle : bundles) {
-            this.multipart.field("bundles.bundle[" + bundleCounter++ + "]", bundle, MediaType.TEXT_PLAIN_TYPE);
+            this.multipart.addFormData("bundles.bundle[" + bundleCounter++ + "]", bundle, MediaType.TEXT_PLAIN_TYPE);
         }
         super.domain.setBundles(bundlesRef);
         return this;

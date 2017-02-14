@@ -37,13 +37,13 @@ public class MondrianConnectionResourceBuilder extends MondrianConnectionResourc
     }
 
     public MondrianConnectionResourceBuilder withMondrianSchema(InputStream schema, ClientFile schemaRef) {
-        multipart.field("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
+        multipart.addFormData("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
         super.connection.setSchema(schemaRef);
         return this;
     }
 
     public MondrianConnectionResourceBuilder withMondrianSchema(InputStream schema) {
-        multipart.field("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
+        multipart.addFormData("schema", schema, new MediaType("application", "olapMondrianSchema+xml"));
         return this;
     }
 

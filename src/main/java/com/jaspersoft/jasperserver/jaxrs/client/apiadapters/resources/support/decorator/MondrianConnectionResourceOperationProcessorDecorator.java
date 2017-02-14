@@ -24,7 +24,7 @@ import com.jaspersoft.jasperserver.dto.resources.ClientMondrianConnection;
 import com.jaspersoft.jasperserver.jaxrs.client.apiadapters.resources.support.processor.CommonOperationProcessorImpl;
 import com.jaspersoft.jasperserver.jaxrs.client.core.SessionStorage;
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -33,11 +33,11 @@ import javax.ws.rs.core.MediaType;
 public abstract class MondrianConnectionResourceOperationProcessorDecorator {
     protected CommonOperationProcessorImpl<ClientMondrianConnection> processor;
     protected ClientMondrianConnection connection;
-    protected FormDataMultiPart multipart;
+    protected MultipartFormDataOutput multipart;
 
     public MondrianConnectionResourceOperationProcessorDecorator(SessionStorage sessionStorage, ClientMondrianConnection connection) {
         this.processor = new CommonOperationProcessorImpl(connection, connection.getClass(), sessionStorage);
-        this.multipart = new FormDataMultiPart();
+        this.multipart = new MultipartFormDataOutput();
         this.connection = connection;
     }
 

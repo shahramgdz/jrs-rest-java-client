@@ -25,7 +25,7 @@ import com.jaspersoft.jasperserver.jaxrs.client.apiadapters.resources.support.Wr
 import com.jaspersoft.jasperserver.jaxrs.client.apiadapters.resources.support.processor.CommonOperationProcessorImpl;
 import com.jaspersoft.jasperserver.jaxrs.client.core.SessionStorage;
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -34,11 +34,11 @@ import javax.ws.rs.core.MediaType;
 public abstract class DomainResourceOperationProcessorDecorator {
     protected CommonOperationProcessorImpl<ClientSemanticLayerDataSource> processor;
     protected ClientSemanticLayerDataSource domain;
-    protected FormDataMultiPart multipart;
+    protected MultipartFormDataOutput multipart;
 
     public DomainResourceOperationProcessorDecorator(SessionStorage sessionStorage, ClientSemanticLayerDataSource domain) {
         this.processor = new CommonOperationProcessorImpl(domain, domain.getClass(), sessionStorage);
-        this.multipart = new FormDataMultiPart();
+        this.multipart = new MultipartFormDataOutput();
         this.domain = domain;
     }
 
@@ -61,7 +61,7 @@ public abstract class DomainResourceOperationProcessorDecorator {
         return domain;
     }
 
-    public FormDataMultiPart getMultipart() {
+    public MultipartFormDataOutput getMultipart() {
         return multipart;
     }
 }

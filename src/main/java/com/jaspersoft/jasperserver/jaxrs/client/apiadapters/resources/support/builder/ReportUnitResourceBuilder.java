@@ -41,19 +41,19 @@ public class ReportUnitResourceBuilder extends ReportUnitResourceOperationProces
     }
 
     public ReportUnitResourceBuilder withJrxml(InputStream jrxml, ClientFile jrxmlDescriptor) {
-        multipart.field("jrxml", jrxml, MediaType.APPLICATION_XML_TYPE);
+        multipart.addFormData("jrxml", jrxml, MediaType.APPLICATION_XML_TYPE);
         super.reportUnit.setJrxml(jrxmlDescriptor);
         return this;
     }
 
     public ReportUnitResourceBuilder withJrxml(String jrxml, ClientFile jrxmlDescriptor) {
-        multipart.field("jrxml", jrxml, MediaType.APPLICATION_XML_TYPE);
+        multipart.addFormData("jrxml", jrxml, MediaType.APPLICATION_XML_TYPE);
         super.reportUnit.setJrxml(jrxmlDescriptor);
         return this;
     }
 
     public ReportUnitResourceBuilder withNewFile(String content, String fileName, ClientFile fileDescriptor) {
-        multipart.field("files." + fileName, content, MediaType.TEXT_PLAIN_TYPE);
+        multipart.addFormData("files." + fileName, content, MediaType.TEXT_PLAIN_TYPE);
         Map<String, ClientReferenceableFile> files = super.reportUnit.getFiles();
         if (files != null) {
             super.reportUnit.getFiles().put(fileName, fileDescriptor);
@@ -65,7 +65,7 @@ public class ReportUnitResourceBuilder extends ReportUnitResourceOperationProces
     }
 
     public ReportUnitResourceBuilder withNewFile(InputStream content, String fileName, ClientFile fileDescriptor) {
-        multipart.field("files." + fileName, content, MediaType.TEXT_PLAIN_TYPE);
+        multipart.addFormData("files." + fileName, content, MediaType.TEXT_PLAIN_TYPE);
         Map<String, ClientReferenceableFile> files = super.reportUnit.getFiles();
         if (files != null) {
             super.reportUnit.getFiles().put(fileName, fileDescriptor);

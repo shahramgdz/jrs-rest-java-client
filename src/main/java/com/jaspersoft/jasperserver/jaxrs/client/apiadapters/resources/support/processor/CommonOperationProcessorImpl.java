@@ -23,7 +23,7 @@ package com.jaspersoft.jasperserver.jaxrs.client.apiadapters.resources.support.p
 import com.jaspersoft.jasperserver.jaxrs.client.apiadapters.resources.SingleResourceAdapter;
 import com.jaspersoft.jasperserver.jaxrs.client.core.SessionStorage;
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -41,8 +41,8 @@ public class CommonOperationProcessorImpl<ResourceType> implements CommonOperati
     }
 
     @Override
-    public OperationResult<ResourceType> create(FormDataMultiPart multipart, MediaType mediaType, String path) {
-        multipart.field("resource", resource, mediaType);
+    public OperationResult<ResourceType> create(MultipartFormDataOutput multipart, MediaType mediaType, String path) {
+        multipart.addFormData("resource", resource, mediaType);
         return new SingleResourceAdapter(sessionStorage, path).uploadMultipartResource(multipart, resourceTypeClass);
     }
 

@@ -35,7 +35,7 @@ import com.jaspersoft.jasperserver.jaxrs.client.core.ThreadPoolUtil;
 import com.jaspersoft.jasperserver.jaxrs.client.core.enums.MimeType;
 import com.jaspersoft.jasperserver.jaxrs.client.core.exceptions.handling.DefaultErrorHandler;
 import com.jaspersoft.jasperserver.jaxrs.client.core.operationresult.OperationResult;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -204,7 +204,7 @@ public class SingleResourceAdapter extends AbstractAdapter {
      * @param <T>               type of entity class
      * @return result instance
      */
-    public <T> OperationResult<T> uploadMultipartResource(FormDataMultiPart multipartResource, Class<T> clazz) {
+    public <T> OperationResult<T> uploadMultipartResource(MultipartFormDataOutput multipartResource, Class<T> clazz) {
         JerseyRequest<T> request = buildRequest(clazz);
         request.setContentType(MediaType.MULTIPART_FORM_DATA);
         return request.post(multipartResource);
@@ -226,7 +226,7 @@ public class SingleResourceAdapter extends AbstractAdapter {
                                                   ClientFile.FileType fileType,
                                                   String label,
                                                   String description) {
-        FormDataMultiPart form = prepareUploadForm(fileContent, fileType, label, description);
+        MultipartFormDataOutput form = prepareUploadForm(fileContent, fileType, label, description);
         JerseyRequest<ClientFile> request = prepareUploadFileRequest();
         return request.post(form);
     }
@@ -236,7 +236,7 @@ public class SingleResourceAdapter extends AbstractAdapter {
                                                 final String label,
                                                 final String description,
                                                 final Callback<OperationResult<ClientFile>, R> callback) {
-        final FormDataMultiPart form = prepareUploadForm(fileContent, fileType, label, description);
+        final MultipartFormDataOutput form = prepareUploadForm(fileContent, fileType, label, description);
         final JerseyRequest<ClientFile> request = prepareUploadFileRequest();
         RequestExecution task = new RequestExecution(new Runnable() {
             @Override
@@ -248,16 +248,15 @@ public class SingleResourceAdapter extends AbstractAdapter {
         return task;
     }
 
-    private FormDataMultiPart prepareUploadForm(File fileContent,
+    private MultipartFormDataOutput prepareUploadForm(File fileContent,
                                                 ClientFile.FileType fileType,
                                                 String label,
                                                 String description) {
-        FormDataMultiPart form = new FormDataMultiPart();
-        form
-                .field("data", fileContent, MediaType.WILDCARD_TYPE)
-                .field("label", label)
-                .field("description", description)
-                .field("type", fileType.name());
+        MultipartFormDataOutput form = new MultipartFormDataOutput();
+        form.addFormData("data", fileContent, MediaType.WILDCARD_TYPE);
+        form.addFormData("label", label, MediaType.TEXT_PLAIN_TYPE);
+        form.addFormData("description", description, MediaType.TEXT_PLAIN_TYPE);
+        form.addFormData("type", fileType.name(), MediaType.TEXT_PLAIN_TYPE);
         return form;
     }
 
